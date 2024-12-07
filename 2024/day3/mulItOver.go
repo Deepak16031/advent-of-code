@@ -2,8 +2,9 @@ package day3
 
 import (
 	"regexp"
-	"strconv"
 	"strings"
+
+	"advent-of-code-in-go/util"
 )
 
 func MulItOver(str string) int {
@@ -15,9 +16,7 @@ func MulItOver(str string) int {
 	for _, match := range allMatches {
 		numberString := numberRegex.FindString(match)
 		numbersSplit := strings.Split(numberString, ",")
-		a, _ := strconv.Atoi(numbersSplit[0])
-		b, _ := strconv.Atoi(numbersSplit[1])
-		sum += a * b
+		sum += util.MultiplyString(numbersSplit[0], numbersSplit[1])
 	}
 	return sum
 
@@ -43,9 +42,7 @@ func MulItOverPart2(str string) int {
 		}
 		numberString := numberRegex.FindString(match)
 		numbersSplit := strings.Split(numberString, ",")
-		a, _ := strconv.Atoi(numbersSplit[0])
-		b, _ := strconv.Atoi(numbersSplit[1])
-		sum += a * b
+		sum += util.MultiplyString(numbersSplit[0], numbersSplit[1])
 	}
 	return sum
 }
