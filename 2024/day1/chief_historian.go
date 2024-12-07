@@ -2,6 +2,23 @@ package main
 
 import "slices"
 
+func FindSimilarity(arr1, arr2 []int) int {
+	freqMap := freqMap(arr2)
+	similarity := 0
+	for _, a := range arr1 {
+		similarity += a * freqMap[a]
+	}
+	return similarity
+}
+
+func freqMap(arr []int) map[int]int {
+	m := make(map[int]int)
+	for _, a := range arr {
+		m[a] = m[a] + 1
+	}
+	return m
+}
+
 func FindDistance(arr1, arr2 []int) int {
 	var distance []int
 
