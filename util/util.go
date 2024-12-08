@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func ReadFile(filename string) ([]int, []int) {
+func ReadFile(filename string, separator string) ([]int, []int) {
 	file, err := os.Open(filename)
 	if err != nil {
 		panic(err)
@@ -20,7 +20,7 @@ func ReadFile(filename string) ([]int, []int) {
 
 	for scanner.Scan() {
 		line := scanner.Text()
-		split := strings.Split(line, "   ")
+		split := strings.Split(line, separator)
 		number, _ := strconv.Atoi(split[0])
 		arr1 = append(arr1, number)
 		number, _ = strconv.Atoi(split[1])
@@ -28,6 +28,23 @@ func ReadFile(filename string) ([]int, []int) {
 	}
 
 	return arr1, arr2
+}
+
+func ReadAllAsArr(filename string) [][]string {
+	file, err := os.Open(filename)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	var arr [][]string
+	for scanner.Scan() {
+		line := scanner.Text()
+		lineArr := strings.Split(line, "")
+		arr = append(arr, lineArr)
+	}
+	return arr
 }
 
 func ReadNumbersTo2DArr(filename string) [][]int {
