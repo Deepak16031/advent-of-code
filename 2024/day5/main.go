@@ -13,6 +13,9 @@ func main() {
 	rules := CreateRules(rulesInputArr[:indexOfEmptyLine])
 	updates := rulesInputArr[indexOfEmptyLine:]
 
-	sum := SumOfMiddleOfValidUpdates(updates, rules)
-	fmt.Println("sum of all correct updates - ", sum)
+	part := true
+	sum := SumOfMiddleOfValidUpdates(updates, rules, part)
+	fmt.Printf("sum of all updates with part2 ? %v is %v\n", part, sum)
+	sum = SumOfMiddleOfValidUpdates(updates, rules, !part)
+	fmt.Printf("sum of all updates with part2 ? %v is %v\n", !part, sum)
 }

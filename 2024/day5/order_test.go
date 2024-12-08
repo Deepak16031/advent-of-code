@@ -63,12 +63,31 @@ func TestSumOfMiddleOfValidUpdates(t *testing.T) {
 	rules := CreateRules(rulesInputArr[:indexOfEmptyLine])
 	updates := rulesInputArr[indexOfEmptyLine:]
 
-	actual := SumOfMiddleOfValidUpdates(updates, rules)
+	actual := SumOfMiddleOfValidUpdates(updates, rules, false)
 	expected := 143
 
 	if expected != actual {
 		log.Fatalf("expected %v actual %v", expected, actual)
 	}
+}
+
+func TestSumOfMiddleOfValidUpdates2(t *testing.T) {
+	filename := "/Users/deepak/GolandProjects/advent-of-code/2024/day5/test_input.txt"
+	rulesInputArr := util.ReadAllAsArr(filename)
+	indexOfEmptyLine := util.IndexOfEmptyLineInArr(rulesInputArr)
+	if indexOfEmptyLine != 21 {
+		log.Fatalf("expected indx of empty line - 21 actual - %v", indexOfEmptyLine)
+	}
+	rules := CreateRules(rulesInputArr[:indexOfEmptyLine])
+	updates := rulesInputArr[indexOfEmptyLine:]
+
+	actual := SumOfMiddleOfValidUpdates(updates, rules, false)
+	expected := 143
+
+	if expected != actual {
+		log.Fatalf("expected %v actual %v", expected, actual)
+	}
+
 }
 
 func assertCorrectOrder(arr []int, rules map[int]map[int]bool, expected bool) {
