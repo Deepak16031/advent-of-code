@@ -90,8 +90,8 @@ func TestSumOfMiddleOfValidUpdates2(t *testing.T) {
 
 }
 
-func assertCorrectOrder(arr []int, rules map[int]map[int]bool, expected bool) {
-	actual := IsCorrectOrder(arr, rules)
+func assertCorrectOrder(arr Sequence, rules Rules, expected bool) {
+	actual := arr.IsCorrectOrder(rules)
 
 	if expected != actual {
 		log.Fatalf("expected %v actual %v", expected, actual)

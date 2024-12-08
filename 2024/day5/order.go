@@ -9,10 +9,11 @@ import (
 )
 
 type Rules map[int]map[int]bool
+type Sequence []int
 
-func IsCorrectOrder(arr []int, rules Rules) bool {
-	for i, val := range arr {
-		subArr := arr[i+1:]
+func (s Sequence) IsCorrectOrder(rules Rules) bool {
+	for i, val := range s {
+		subArr := s[i+1:]
 		for _, subVal := range subArr {
 			if rules[subVal][val] {
 				return false
@@ -41,13 +42,13 @@ func CreateRules(rulesInputArr []string) Rules {
 func SumOfMiddleOfValidUpdates(updates []string, rules Rules, part2 bool) int {
 	sum := 0
 	for _, update := range updates {
-		updateIntArr := util.ConvertToIntSlice(strings.Split(update, ","))
-		isOrderCorrect := IsCorrectOrder(updateIntArr, rules)
+		updateIntArr := Sequence(util.ConvertToIntSlice(strings.Split(update, ",")))
+		isOrderCorrect := updateIntArr.IsCorrectOrder(rules)
 		if !part2 && isOrderCorrect {
 			sum += updateIntArr[len(updateIntArr)/2]
 		} else if part2 && !isOrderCorrect {
 			correctTheOrder(updateIntArr, rules)
-			if !IsCorrectOrder(updateIntArr, rules) {
+			if !updateIntArr.IsCorrectOrder(rules) {
 				log.Fatalf("order is not corrected")
 			}
 			sum += updateIntArr[len(updateIntArr)/2]
