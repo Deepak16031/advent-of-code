@@ -7,6 +7,15 @@ import (
 	"strings"
 )
 
+func ConvertToIntSlice(strArr []string) []int {
+	var res []int
+	for _, str := range strArr {
+		converted, _ := strconv.Atoi(str)
+		res = append(res, converted)
+	}
+	return res
+}
+
 func ReadFile(filename string, separator string) ([]int, []int) {
 	file, err := os.Open(filename)
 	if err != nil {
@@ -30,7 +39,7 @@ func ReadFile(filename string, separator string) ([]int, []int) {
 	return arr1, arr2
 }
 
-func ReadAllAsArr(filename string) [][]string {
+func ReadAllAsArr(filename string) []string {
 	file, err := os.Open(filename)
 	if err != nil {
 		panic(err)
@@ -38,13 +47,32 @@ func ReadAllAsArr(filename string) [][]string {
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
-	var arr [][]string
+	var arr []string
 	for scanner.Scan() {
 		line := scanner.Text()
-		lineArr := strings.Split(line, "")
-		arr = append(arr, lineArr)
+		arr = append(arr, line)
 	}
 	return arr
+}
+
+func RealAllLineAsStringUntilBreak(filename string) []string {
+	file, err := os.Open(filename)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	scanner := bufio.NewScanner(file)
+	var res []string
+	i := 0
+	for scanner.Scan() {
+		line := scanner.Text()
+		res = append(res, line)
+		if line == "" {
+			break
+		}
+		i++
+	}
+	return res
 }
 
 func ReadNumbersTo2DArr(filename string) [][]int {
@@ -73,4 +101,16 @@ func MultiplyString(str1, str2 string) int {
 	a, _ := strconv.Atoi(str1)
 	b, _ := strconv.Atoi(str2)
 	return a * b
+}
+
+func IndexOfEmptyLineInArr(rulesInputArr []string) int {
+	indexOfEmptyLine := func(stringArr []string) int {
+		for i, arr := range stringArr {
+			if arr == "" {
+				return i
+			}
+		}
+		return -1
+	}(rulesInputArr)
+	return indexOfEmptyLine
 }
