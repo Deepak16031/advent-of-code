@@ -114,3 +114,7 @@ func IndexOfEmptyLineInArr(rulesInputArr []string) int {
 	}(rulesInputArr)
 	return indexOfEmptyLine
 }
+
+func IsValid(a1, b1, ROWS, COLS int) bool {
+	return a1 >= 0 && a1 < ROWS && b1 >= 0 && b1 < COLS
+}
