@@ -7,6 +7,11 @@ import (
 	"strings"
 )
 
+func ConvertStringToIntSlice(str string, sep string) []int {
+	str = strings.Trim(str, " ")
+	return ConvertToIntSlice(strings.Split(str, sep))
+}
+
 func ConvertToIntSlice(strArr []string) []int {
 	var res []int
 	for _, str := range strArr {
