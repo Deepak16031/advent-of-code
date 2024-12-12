@@ -27,8 +27,14 @@ func main() {
 
 func Part1(input [][]int) int {
 	sum := 0
+	var ch = make(chan int)
 	for _, test := range input {
-		sum += solve(test)
+		go func(arr []int) {
+			ch <- solve(arr)
+		}(test)
+	}
+	for i := 0; i < len(input); i++ {
+		sum += <-ch
 	}
 	return sum
 }
