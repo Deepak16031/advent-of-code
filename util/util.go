@@ -102,6 +102,23 @@ func ReadNumbersTo2DArr(filename string) [][]int {
 	return res
 }
 
+func ReadFileAs2DArr(filename, separator string) [][]string {
+	file, err := os.Open(filename)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	var arr [][]string
+	for scanner.Scan() {
+		line := scanner.Text()
+		lineSplit := strings.Split(line, separator)
+		arr = append(arr, lineSplit)
+	}
+	return arr
+}
+
 func MultiplyString(str1, str2 string) int {
 	a, _ := strconv.Atoi(str1)
 	b, _ := strconv.Atoi(str2)
