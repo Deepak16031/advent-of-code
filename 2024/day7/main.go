@@ -2,11 +2,14 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 
 	"advent-of-code-in-go/util"
 )
+
+const Part2Enabled = true
 
 func main() {
 
@@ -53,6 +56,16 @@ func solveUtil(values []int, indx, currValue, target int) bool {
 		return currValue == target
 	}
 	return solveUtil(values, indx+1, currValue+values[indx], target) ||
-		solveUtil(values, indx+1, currValue*values[indx], target)
+		solveUtil(values, indx+1, currValue*values[indx], target) ||
+		(Part2Enabled && solveUtil(values, indx+1, currValue*int(math.Pow(10, float64(countDigits(values[indx]))))+values[indx], target))
 
+}
+
+func countDigits(n int) (count int) {
+	count = 1
+	for n > 9 {
+		n = n / 10
+		count++
+	}
+	return
 }
