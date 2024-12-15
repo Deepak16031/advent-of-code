@@ -3,16 +3,17 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 	"strconv"
-
-	"advent-of-code-in-go/util"
+	"strings"
 )
 
 func main() {
-	filename := "/Users/deepak/GolandProjects/advent-of-code/2024/day9/input.txt"
-	input := util.ReadFileAs2DArr(filename, "")
-	arr := input[0]
-	fmt.Println("Checksum - ", Solution(arr))
+	//filename := "/Users/deepak/GolandProjects/advent-of-code/2024/day9/input.txt"
+	//input := util.ReadFileAs2DArr(filename, "")
+	//arr := input[0]
+	arr := strings.Split(os.Args[0], "")
+	fmt.Println("Solution2 - ", Solution2(arr))
 }
 
 func Solution(input []string) int {
