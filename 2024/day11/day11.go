@@ -2,39 +2,45 @@ package main
 
 import (
 	"fmt"
-	"math"
-	"slices"
-
-	"advent-of-code-in-go/util"
+	"strconv"
 )
+
+type Pair [2]int
 
 func main() {
 	arr := []int{2701, 64945, 0, 9959979, 93, 781524, 620, 1}
-	fmt.Println(Solution(arr))
+	fmt.Println(Solution2(arr, 75))
 }
 
-func Solution(arr []int) int {
-
-	for k := 0; k < 25; k++ {
-		for i := 0; i < len(arr); i++ {
-			val := arr[i]
-			if val == 0 {
-				arr[i] = 1
-				continue
-			}
-			digits := util.CountDigits(val)
-			if digits%2 == 0 {
-				quotient := int(math.Pow(10, float64(digits/2)))
-				leftHalf := val / quotient
-				rightHalf := val % quotient
-				arr[i] = leftHalf
-				arr = slices.Insert(arr, i+1, rightHalf)
-				i++
-			} else {
-				arr[i] = arr[i] * 2024
-			}
-		}
-		//fmt.Println(arr)
+func Solution2(arr []int, iterations int) int {
+	cache := make(map[Pair]int)
+	ans := 0
+	for i := 0; i < len(arr); i++ {
+		ans += solve(cache, arr[i], iterations)
 	}
-	return len(arr)
+	return ans
+}
+
+func solve(cache map[Pair]int, val, iterations int) int {
+	pair := Pair{val, iterations}
+	if cache[pair] != 0 {
+		return cache[pair]
+	}
+	if iterations == 0 {
+		return 1
+	}
+	if val == 0 {
+		cache[pair] = solve(cache, 1, iterations-1)
+		return cache[pair]
+	}
+	strVal := strconv.Itoa(val)
+	digits := len(strVal)
+	if digits%2 == 0 {
+		leftHalf, _ := strconv.Atoi(strVal[0 : digits/2])
+		rightHalf, _ := strconv.Atoi(strVal[digits/2:])
+		cache[pair] = solve(cache, leftHalf, iterations-1) + solve(cache, rightHalf, iterations-1)
+	} else {
+		cache[pair] = solve(cache, val*2024, iterations-1)
+	}
+	return cache[pair]
 }
