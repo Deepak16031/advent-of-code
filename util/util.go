@@ -140,3 +140,12 @@ func IndexOfEmptyLineInArr(rulesInputArr []string) int {
 func IsValid(a1, b1, ROWS, COLS int) bool {
 	return a1 >= 0 && a1 < ROWS && b1 >= 0 && b1 < COLS
 }
+
+func CountDigits(n int) (count int) {
+	count = 1
+	for n > 9 {
+		n = n / 10
+		count++
+	}
+	return
+}
