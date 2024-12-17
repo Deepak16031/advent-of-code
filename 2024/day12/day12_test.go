@@ -19,7 +19,7 @@ func TestSolution(t *testing.T) {
 				{"B", "B", "C", "C"},
 				{"E", "E", "E", "C"},
 			},
-			140,
+			80,
 		},
 	}
 	for _, tt := range tests {

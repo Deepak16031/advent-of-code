@@ -26,29 +26,42 @@ func Solution(arr [][]string) int {
 		for j := 0; j < COLS; j++ {
 			area := 0
 			peri := 0
-			pointCost := dfs(arr, i, j, &area, &peri)
-			cost += pointCost
+			dfs(arr, i, j, &area, &peri)
+			cost += area * peri
 		}
 	}
 	return cost
 }
 
-func dfs(arr [][]string, i int, j int, area *int, perimeter *int) int {
+func dfs(arr [][]string, i int, j int, area *int, perimeter *int) {
 	point := Point{i, j}
 	if visited[point] {
-		return (*area) * (*perimeter)
+		return
 	}
 	visited[point] = true
 	*area++
+
+	good := func(dir [2]int) bool {
+		r2 := i + dir[0]
+		c2 := j + dir[1]
+		return util.IsValid(r2, c2, ROWS, COLS) && arr[r2][c2] == arr[i][j]
+	}
+
+	for i, dir := range dirs {
+		dir2 := dirs[(i+1)%4]
+		if !good(dir) && !good(dir2) {
+			*perimeter++
+		}
+		if good(dir) && good(dir2) && !good([2]int{dir[0] + dir2[0], dir[1] + dir2[1]}) {
+			*perimeter++
+		}
+	}
+
 	for _, dir := range dirs {
 		a1 := i + dir[0]
 		b1 := j + dir[1]
-		if !util.IsValid(a1, b1, ROWS, COLS) || arr[i][j] != arr[a1][b1] {
-			*perimeter++
-		}
-		if util.IsValid(a1, b1, ROWS, COLS) && arr[i][j] == arr[a1][b1] {
+		if !visited[Point{a1, b1}] && good(dir) {
 			dfs(arr, a1, b1, area, perimeter)
 		}
 	}
-	return (*area) * (*perimeter)
 }
